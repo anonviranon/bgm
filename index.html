@@ -15,7 +15,10 @@
 
     <!-- ===== PAGE 1: The Initial Rose Screen ===== -->
     <div id="page1">
+        <!-- UPDATED: Changed from an image to an autoplaying video. The user will click this video. -->
         <video id="static-rose" src="assets/staticrose.mp4" autoplay loop muted playsinline></video>
+        
+        <!-- This video will play after the click -->
         <video id="blooming-rose-video" preload="auto" playsinline muted>
             <source src="assets/bloomrose.mp4" type="video/mp4">
         </video>
@@ -23,13 +26,15 @@
 
     <!-- ===== PAGE 2: The Main Invitation Content ===== -->
     <div id="page2">
-
+        <!-- Backgrounds and Overlays -->
         <video id="page2-background-video" autoplay muted loop playsinline>
             <source src="assets/page2bg.mp4" type="video/mp4">
         </video>
+        <!-- The overlay div was removed as per your new code -->
 
         <!-- Scrollable Content -->
         <div class="scroll-container">
+            <!-- Reverted to Imgur link as per your new code -->
             <img src="https://i.imgur.com/IcfKVWq.png" alt="Invitation Header" class="header-image">
             
             <div class="invitation-content">
@@ -53,6 +58,7 @@
                 </div>
             
                 <div id="calendar-button-container" onclick="togglePopup('calendar-popup')">
+                     <!-- Reverted to Imgur link as per your new code -->
                     <img src="https://i.imgur.com/SXj4c93.jpeg" alt="Save the Date" id="calendar-button-image">
                 </div>
 
