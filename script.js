@@ -1,80 +1,134 @@
-// This function runs when the entire HTML page has loaded
-document.addEventListener('DOMContentLoaded', function() {
+// --- Global Functions ---
+// These functions are placed here so the HTML's inline onclick="..." can find them.
 
-  // --- Page 1 to Page 2 Transition ---
-  const staticRose = document.getElementById('static-rose');
-  const bloomingRoseVideo = document.getElementById('blooming-rose-video');
-  const page1 = document.getElementById('page1');
-  const backgroundMusic = document.getElementById('background-music');
-
-  staticRose.addEventListener('click', function() {
-    // Hide the static image and show the video
-    staticRose.style.display = 'none';
-    bloomingRoseVideo.style.display = 'block';
-    bloomingRoseVideo.play();
-    
-    // Play background music
-    backgroundMusic.play();
-
-    // After the rose video finishes, fade out page 1
-    bloomingRoseVideo.onended = function() {
-      page1.style.opacity = '0';
-      // After the fade-out transition, hide page1 completely
-      setTimeout(() => {
-        page1.style.display = 'none';
-      }, 1500); // This time should match the CSS transition duration
-    };
-  });
-
-
-  // --- Countdown Timer ---
-  // Set the date for the event
-  const countdownDate = new Date("Sep 27, 2025 12:00:00").getTime();
-
-  const timer = setInterval(function() {
-    const now = new Date().getTime();
-    const distance = countdownDate - now;
-
-    // Calculations for days, hours, minutes, and seconds
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Display the results
-    document.getElementById("days").innerText = String(days).padStart(2, '0');
-    document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-    document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-    document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-
-    // If the countdown is over, display some text
-    if (distance < 0) {
-      clearInterval(timer);
-      document.getElementById("countdown-timer").innerHTML = "The event has started!";
-    }
-  }, 1000);
-
-});
-
-
-// --- Popup Toggle Functionality ---
-// This function is called by the onclick attribute in your HTML
 function togglePopup(popupId) {
   const targetPopup = document.getElementById(popupId);
-  if (!targetPopup) return; // Exit if the popup doesn't exist
+  if (!targetPopup) return;
 
-  // Check if the target popup is already visible
   const isVisible = targetPopup.style.display === 'flex';
 
-  // First, hide all popups
-  const allPopups = document.querySelectorAll('.popup');
-  allPopups.forEach(popup => {
+  // Hide all popups first
+  document.querySelectorAll('.popup').forEach(popup => {
     popup.style.display = 'none';
   });
 
-  // If the target popup was not visible, show it
+  // If the target wasn't visible, show it. Otherwise, it stays hidden.
   if (!isVisible) {
     targetPopup.style.display = 'flex';
   }
-  // If it was already visible, the code above has already hidden it.
 }
+
+function downloadIcsFile() {
+  const icsLink = document.getElementById('ics-cal-link');
+  // Prevent download if links aren't ready yet
+  if (icsLink.classList.contains('link-loading')) return; 
+
+  const link = document.createElement('a');
+  link.href = icsLink.href;
+  link.download = 'Majlis_Kenduri.ics';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+
+// --- Main Application Logic ---
+// This runs after the HTML page is fully loaded.
+document.addEventListener('DOMContentLoaded', function() {
+
+  // --- Element Selections ---
+  const page1 = document.getElementById('page1');
+  const staticRose = document.getElementById('static-rose');
+  const video = document.getElementById('blooming-rose-video');
+  const backgroundMusic = document.getElementById('background-music');
+
+  // --- Event Listeners ---
+
+  // 1. Blooming rose animation
+  staticRose.addEventListener('click', function() {
+    if (backgroundMusic) {
+      backgroundMusic.play().catch(error => console.error("Audio playback failed:", error));
+    }
+    this.style.display = 'none';
+    video.style.display = 'block';
+    video.play();
+  });
+
+  // 2. Actions after the video finishes
+  video.onended = function() {
+    // Fade out the first page
+    page1.style.opacity = '0';
+    page1.style.pointerEvents = 'none';
+
+    // Set the guest count
+    document.getElementById('guest-count').innerText = "75";
+
+    // Generate calendar links
+    generateCalendarLinks();
+  };
+
+  // --- Functions ---
+
+  function generateCalendarLinks() {
+    // Event Details
+    const eventDetails = {
+      title: "Jamuan Kenduri KKTJMPPP",
+      description: "Majlis Jamuan Kenduri Kesyukuran Kakitangan Jabatan Mufti Pulau Pinang",
+      location: "Berjaya Penang Hotel, George Town, Penang, Malaysia",
+      // Note: Times are in UTC (Malaysia time - 8 hours)
+      // 2:00 PM Malaysia time is 06:00 UTC
+      // 10:00 PM Malaysia time is 14:00 UTC
+      startDate: "20250927T060000Z",
+      endDate: "20250927T140000Z",
+    };
+
+    // 1. Google Calendar Link
+    const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.startDate}/${eventDetails.endDate}&details=${encodeURIComponent(eventDetails.description)}&location=${encodeURIComponent(eventDetails.location)}`;
+
+    // 2. Apple/Outlook (ICS File) Link
+    const icsContent = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//MyWebApp//EN',
+      'BEGIN:VEVENT',
+      `UID:kenduri-kktjmppp-20250927@mufti.penang.gov.my`,
+      `DTSTAMP:${new Date().toISOString().replace(/[-:.]/g, '')}`,
+      `DTSTART:${eventDetails.startDate}`,
+      `DTEND:${eventDetails.endDate}`,
+      `SUMMARY:${eventDetails.title}`,
+      `DESCRIPTION:${eventDetails.description}`,
+      `LOCATION:${eventDetails.location}`,
+      'END:VEVENT', 'END:VCALENDAR'
+    ].join('\r\n');
+    const icsUri = "data:text/calendar;charset=utf-8," + encodeURIComponent(icsContent);
+
+    // Update the HTML links
+    const googleEl = document.getElementById("google-cal-link");
+    const icsEl = document.getElementById("ics-cal-link");
+    googleEl.href = googleLink;
+    googleEl.classList.remove("link-loading");
+    icsEl.href = icsUri;
+    icsEl.classList.remove("link-loading");
+  }
+
+  // --- Countdown Timer ---
+  const countdownDate = new Date("September 27, 2025 14:00:00").getTime(); // Set to 2 PM
+  const timer = setInterval(function() {
+    const now = new Date().getTime();
+    const dist = countdownDate - now;
+
+    if (dist < 0) {
+      clearInterval(timer);
+      document.getElementById("countdown-timer").innerHTML = "<h3>The day is here!</h3>";
+      return;
+    }
+
+    const d = Math.floor(dist / (1000 * 60 * 60 * 24));
+    const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((dist % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = String(d).padStart(2, '0');
+    document.getElementById("hours").innerText = String(h).padStart(2, '0');
+    document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+    document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+  }, 1000);
+});
