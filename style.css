@@ -64,15 +64,6 @@
     left: 0;
     z-index: 5;
   }
-  #music-control-button {
-    width: auto;
-    top: 25px;
-    right: 25px;
-    left: auto;
-    font-size: 30px;
-    cursor: pointer;
-    color: #fff;
-  }
   .icon-bar {
     bottom: 0;
     background: rgba(0, 0, 0, 0.7);
@@ -81,7 +72,6 @@
     padding: 15px 0; padding-bottom: calc(15px + env(safe-area-inset-bottom));
   }
   
-  /* UPDATED: Changed justify-content and added a gap */
   .popup {
     display: none;
     position: absolute; 
@@ -99,7 +89,6 @@
     z-index: 6;
   }
 
-  /* --- Other content styles --- */
   .header-image {
     width: 40%;
     max-width: 175px;
@@ -233,7 +222,7 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   body, html {
     font-size: 16px;
     overflow-x: hidden;
