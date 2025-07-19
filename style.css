@@ -1,153 +1,129 @@
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100%; width: 100%;
-    font-family: 'Garamond', serif;
-    overflow: visible;
-    background-color: #000;
-  }
-  #page1 {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: #000;
-    opacity: 1;
-    transition: opacity 1.5s ease-in-out;
-    z-index: 10;
-  }
-  #page2 {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    color: #fff; text-align: center;
-    display: block;
-    overflow: hidden;
-    z-index: 1;
-  }
-  #static-rose, 
-  #blooming-rose-video {
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
-  #static-rose { cursor: pointer; }
-  #page2-background-video {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 1;
-  }
-  #effects-overlay-video {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    mix-blend-mode: screen; 
-    pointer-events: none; 
-    z-index: 2;
-    opacity: 0.5;
-  }
-  .overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.55);
-    z-index: 3;
-  }
-  .scroll-container {
-    width: 100%; height: 100%;
-    overflow-y: auto;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 4;
-  }
-  #music-control-button,
-  .icon-bar {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    z-index: 7;
-  }
-  .icon-bar {
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex; justify-content: space-around;
-    align-items: center;
-    padding: 15px 0; padding-bottom: calc(15px + env(safe-area-inset-bottom));
-  }
+/* General Setup */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Garamond', serif;
+  background-color: #000;
+  overflow-x: hidden; /* FIX: Prevents horizontal scrolling on all screen sizes */
+}
 
-.icon-container {
-  padding: 10x;
+/* Page Structure */
+#page1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 1;
+  transition: opacity 1.5s ease-in-out;
+  z-index: 10;
+}
+
+#page2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-align: center;
+  display: block;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Backgrounds & Overlays */
+#static-rose,
+#blooming-rose-video,
+#page2-background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#static-rose { 
+  cursor: pointer; 
+}
+
+#page2-background-video {
+  z-index: 1;
+}
+
+#effects-overlay-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.5;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 3;
+}
+
+/* Scrollable Content Area */
+.scroll-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
   display: flex;
-  justify-content: center;
-  align-items:center;
-  
-  .popup {
-    display: none;
-    position: absolute; 
-    bottom: 80px; left: 50%;
-    transform: translateX(-50%); 
-    width: 90%; max-width: 400px;
-    box-sizing: border-box;
-    background: rgba(20, 20, 20, 0.95);
-    padding: 20px; 
-    border-radius: 15px; 
-    animation: popUp 0.3s ease-out;
-    justify-content: center; /* Center the group of buttons */
-    align-items: center;
-    gap: 50px; /* Create a nice space between the buttons */
-    z-index: 6;
-  }
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 4;
+  /* FIX: Added properties for a smoother scrolling experience on mobile */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
 
-  .header-image {
-    width: 40%;
-    max-width: 175px;
-    margin-top: 5vh;
-    margin-bottom: 20px;
-    flex-shrink: 0;
-  }
-  .invitation-content {
-    animation: fadeIn 2.5s ease-out;
-  }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
-  h3 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
-  .icon { font-size: clamp(24px, 7vw, 28px); color: #fff; cursor: pointer; }
-  @keyframes popUp { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-  .popup a i {
-    font-size: clamp(48px, 12vw, 60px);
-    color: #ffffff;
-    transition: transform 0.2s ease-in-out;
-  }
-  .popup a:hover i {
-    transform: scale(1.1);
-  }
-  .scroll-spacer {
-    flex-shrink: 0;
-    height: 120px; 
-  }
-  .popup a.contact-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #ffffff;
-    gap: 8px;
-  }
-  .popup a.contact-link span {
-    font-size: 14px;
-    font-family: Arial, sans-serif;
-  }
-  #calendar-button-container {
-    display: block;
-    margin: 25px auto;
-    width: 50%;
-    max-width: 110px;
-    position: relative;
-  }
-  #calendar-button-image {
-    width: 100%; 
-    display: block;
-    border-radius: 12px;
-  }
+.header-image {
+  width: 40%;
+  max-width: 175px;
+  margin-top: 5vh;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
 
-  #countdown-timer {
+.invitation-content {
+  animation: fadeIn 2.5s ease-out;
+  box-sizing: border-box;
+  /* FIX: Added padding to prevent text from touching the screen edges on mobile */
+  padding: 0 20px;
+}
+
+/* FIX: Added style for the .poem class from your HTML */
+.poem {
+  font-family: 'Times New Roman', serif;
+  font-size: 1.2em;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 20px; /* Added margin for spacing */
+}
+
+/* Typography */
+h2 { font-size: clamp(2.2rem, 10vw, 3rem); }
+h3 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+
+/* Countdown Timer */
+#countdown-timer {
   display: flex;
   justify-content: center;
   gap: 15px;
@@ -163,120 +139,156 @@
   min-width: 50px;
   text-align: center;
 }
-#countdown-timer span:first-child { /* The number */
+#countdown-timer span:first-child {
   font-size: clamp(1.8rem, 5vw, 2.2rem);
   font-weight: bold;
   line-height: 1;
 }
-#countdown-timer span:last-child { /* The label (Days, Hours, etc.) */
+#countdown-timer span:last-child {
   font-size: 0.7rem;
   text-transform: uppercase;
   margin-top: 5px;
 }
 
-/* This NEW style ONLY affects the calendar pop-up */
-.calendar-popup-style {
-  justify-content: center; /* Centers the two buttons */
-  gap: 40px; /* Creates a specific gap for the two buttons */
-  
-  /* UPDATED: Allows the box to be wider */
-  width: auto; /* Let the width be determined by its content */
-  padding-left: 40px; /* Add more horizontal space */
-  padding-right: 40px;
-  max-width: none; /* Remove the previous width restriction */
+/* Bottom Icon Bar */
+.icon-bar {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 0;
+  /* This helps avoid the iPhone "notch" area */
+  padding-bottom: calc(15px + env(safe-area-inset-bottom));
+  z-index: 7;
 }
 
-/* Add this new rule to your styles.html file */
-
-.popup a.link-loading {
-  cursor: wait; /* Show a waiting cursor on hover */
-  opacity: 0.5; /* Make the link look dimmed */
+.icon-container {
+  /* FIX: Corrected '10x' to '10px'. '10x' is not a valid CSS unit. */
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* ADD THESE NEW STYLES to your styles.html file */
+.icon {
+  font-size: clamp(24px, 7vw, 28px);
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Popups */
+/* FIX: Un-nested this rule. Standard CSS does not support nesting. */
+.popup {
+  display: none;
+  position: absolute;
+  bottom: 85px; /* Adjusted slightly for better spacing */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  box-sizing: border-box;
+  background: rgba(20, 20, 20, 0.95);
+  padding: 20px;
+  border-radius: 15px;
+  animation: popUp 0.3s ease-out;
+  display: flex; /* Changed from 'none' to 'flex' and will be toggled by JS */
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  z-index: 6;
+}
 
 /* This targets only the RSVP pop-up */
 .rsvp-popup-vertical {
-  flex-direction: column; /* This stacks the items vertically */
-  justify-content: center;
-  align-items: center;
-  gap: 10px; /* Space between the list items */
+  flex-direction: column;
+  gap: 10px;
   padding: 25px;
 }
 
-/* Style for the title inside the pop-up */
+.popup a {
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.2s ease-in-out;
+}
+.popup a:hover {
+  transform: scale(1.1);
+}
+.popup a i {
+  font-size: clamp(48px, 12vw, 60px);
+}
+
+.contact-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.contact-link span {
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+.link-loading {
+  cursor: wait;
+  opacity: 0.5;
+}
+
 .rsvp-popup-vertical h3 {
   margin: 0 0 10px 0;
   font-size: 1.3em;
   font-weight: bold;
 }
-
-/* Style for each choice in the list */
-.rsvp-popup-vertical .rsvp-link {
+.rsvp-link {
   display: block;
   width: 100%;
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 8px;
-  text-decoration: none;
-  color: #fff;
   font-size: 1.1em;
   transition: background-color 0.2s ease;
 }
-
-.rsvp-popup-vertical .rsvp-link:hover {
+.rsvp-link:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Spacer to prevent content from hiding behind the bottom bar */
+.scroll-spacer {
+  flex-shrink: 0;
+  height: 120px;
+}
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popUp { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* =================================== */
+/* ===== MOBILE RESPONSIVE STYLES ==== */
+/* =================================== */
 @media (max-width: 768px) {
-  body, html {
-    font-size: 16px;
-    overflow-x: hidden;
-  }
-
-  .popup {
-    gap: 30px;
-    padding: 15px;
-    width: 95%;
-    max-width: none;
-  }
-
   .header-image {
-    width: 60%;
+    width: 50%; /* Slightly larger for mobile */
     max-width: 150px;
   }
 
-  #calendar-button-container {
-    width: 70%;
-    max-width: 100px;
+  /* Make popups a little smaller on mobile */
+  .popup {
+    gap: 30px;
+    padding: 15px;
+    bottom: 80px;
   }
-
-  .icon {
-    padding: 12px;
-  }
-
-  .rsvp-popup-vertical .rsvp-link {
-    font-size: 1.2em;
-    padding: 14px;
-  }
-
   .popup a i {
-    font-size: 40px;
+    font-size: 40px; /* Smaller icons inside popups */
   }
 
+  /* Adjust countdown timer for small screens */
   #countdown-timer > div {
     min-width: 45px;
     padding: 8px;
   }
-
   #countdown-timer span:first-child {
     font-size: 1.8rem;
   }
-
-  .scroll-container {
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-  }
 }
-
-</style>
