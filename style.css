@@ -42,8 +42,8 @@ body, html {
     transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
-    width: vw;
-    height: vh;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
 }
 
