@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html>
-  <head>
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
-  </head>
+<html lang="ms"> <head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jemputan ke Majlis Kenduri</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script> </head>
   <body>
     
     <video id="effects-overlay-video" autoplay muted loop playsinline>
@@ -19,9 +25,9 @@
 
     <div id="page2">
 
-<audio id="background-music" loop preload="auto">
-  <source src="https://raw.githubusercontent.com/anonviranon/lagukawin/main/Izam%20Eye%20%26%20Waheeda%20-%20Kompang%20Dipalu.mp3" type="audio/mpeg">
-</audio>
+      <audio id="background-music" loop preload="auto">
+        <source src="https://raw.githubusercontent.com/anonviranon/lagukawin/main/Izam%20Eye%20%26%20Waheeda%20-%20Kompang%20Dipalu.mp3" type="audio/mpeg">
+      </audio>
 
       <video id="page2-background-video" autoplay muted loop playsinline>
         <source src="https://i.imgur.com/VDfqLDb.mp4" type="video/mp4">
@@ -33,7 +39,7 @@
         <img src="https://i.imgur.com/IcfKVWq.png" alt="Invitation Header" class="header-image">
         
         <div class="invitation-content">
-          <div style="font-family: 'Times New Roman', serif; font-size: 1.2em; line-height: 1.6; text-align: center;">
+          <div class="poem">
             <p><em>Bunga mawar di taman indah,<br>
             Harum semerbak menyentuh jiwa,<br>
             Kasih disulam tiada padam,<br>
@@ -48,24 +54,24 @@
           <p>Hotel Berjaya, Pulau Pinang</p>
           <p>Hari Sabtu, 27 September 2025</p>
 
-   <div id="attendance-counter">
-      ❤️ Tetamu yang hadir <span id="guest-count">0</span> ❤️
-    </div>
-    
-<div class="icon-container" id="calendar-button-container">
-  <img src="https://i.imgur.com/SXj4c93.jpeg" alt="Save the Date" id="calendar-button-image" onclick="togglePopup('calendar-popup')">
-  
-<div id="calendar-popup" class="popup calendar-popup-style">
-  <a id="google-cal-link" href="#" target="_blank" class="contact-link link-loading">
-    <i class="fab fa-google"></i>
-    <span>Google</span>
-  </a>
-  <a id="ics-cal-link" href="#" onclick="downloadIcsFile()" class="contact-link link-loading">
-    <i class="fas fa-calendar-alt"></i>
-    <span>Apple/Other</span>
-  </a>
-</div>
-</div>
+          <div id="attendance-counter">
+            ❤️ Tetamu yang hadir <span id="guest-count">0</span> ❤️
+          </div>
+      
+          <div class="icon-container" id="calendar-button-container">
+            <img src="https://i.imgur.com/SXj4c93.jpeg" alt="Save the Date" id="calendar-button-image" onclick="togglePopup('calendar-popup')">
+            
+            <div id="calendar-popup" class="popup calendar-popup-style">
+              <a id="google-cal-link" href="#" target="_blank" class="contact-link link-loading">
+                <i class="fab fa-google"></i>
+                <span>Google</span>
+              </a>
+              <a id="ics-cal-link" href="#" onclick="downloadIcsFile()" class="contact-link link-loading">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Apple/Other</span>
+              </a>
+            </div>
+          </div>
 
           <div id="countdown-timer">
             <div><span id="days">00</span><span>Days</span></div>
@@ -78,11 +84,10 @@
         <div class="scroll-spacer"></div>
       </div>
           
-
       <div class="icon-bar">
         <div id="maps-popup" class="popup">
           <a href="https://www.google.com/maps/dir/?api=1&destination=1-Stop+Midlands+Park,+Jalan+Burma,+10350+George+Town,+Pulau+Pinang" target="_blank">
-          <i class="fas fa-map"></i>
+            <i class="fas fa-map"></i>
           </a>
           <a href="https://waze.com/ul?ll=5.4308,100.3095&navigate=yes" target="_blank"><i class="fab fa-waze"></i></a>
           <a href="http://maps.apple.com/?ll=5.4308,100.3095&q=Berjaya+Penang+Hotel" target="_blank"><i class="fab fa-apple"></i></a>
@@ -98,34 +103,33 @@
           </a>
         </div>
 
-<div id="rsvp-popup" class="popup rsvp-popup-vertical">
-  <h3>Répondez s'il vous plaît</h3>
-  <a href="YOUR_EARLY_BIRD_FORM_LINK" target="_blank" class="rsvp-link">
-    Early Bird
-  </a>
-  <a href="YOUR_DINNER_ONLY_FORM_LINK" target="_blank" class="rsvp-link">
-    Dinner
-  </a>
-  <a href="YOUR_KURSUS_AND_DINNER_FORM_LINK" target="_blank" class="rsvp-link">
-    Kursus dan Dinner
-  </a>
-</div>
+        <div id="rsvp-popup" class="popup rsvp-popup-vertical">
+          <h3>Répondez s'il vous plaît</h3>
+          <a href="YOUR_EARLY_BIRD_FORM_LINK" target="_blank" class="rsvp-link">
+            Early Bird
+          </a>
+          <a href="YOUR_DINNER_ONLY_FORM_LINK" target="_blank" class="rsvp-link">
+            Dinner
+          </a>
+          <a href="YOUR_KURSUS_AND_DINNER_FORM_LINK" target="_blank" class="rsvp-link">
+            Kursus dan Dinner
+          </a>
+        </div>
 
-  <div class="icon-container">
-    <i class="fas fa-map-marker-alt icon" onclick="togglePopup('maps-popup')"></i>
-  </div>
-  
-  <div class="icon-container">
-    <i class="fas fa-calendar-check icon" onclick="togglePopup('rsvp-popup')"></i>
-  </div>
-  
-  <div class="icon-container">
-    <i class="fas fa-address-book icon" onclick="togglePopup('contacts-popup')"></i>
-  </div>
+        <div class="icon-container">
+          <i class="fas fa-map-marker-alt icon" onclick="togglePopup('maps-popup')"></i>
+        </div>
+        
+        <div class="icon-container">
+          <i class="fas fa-calendar-check icon" onclick="togglePopup('rsvp-popup')"></i>
+        </div>
+        
+        <div class="icon-container">
+          <i class="fas fa-address-book icon" onclick="togglePopup('contacts-popup')"></i>
+        </div>
       </div>
       
     </div>
 
-    <?!= include('script'); ?>
-  </body>
+    </body>
 </html>
