@@ -247,6 +247,44 @@ p { margin: 10px 0; }
     opacity: 0.5;
 }
 
+.marquee-container {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    z-index: 3; /* Positioned above the background video */
+    pointer-events: none; /* Allows clicks to go through to the video */
+}
+
+.marquee-top {
+    top: 5%;
+}
+
+.marquee-bottom {
+    bottom: 5%;
+}
+
+.marquee-text {
+    display: inline-block;
+    white-space: nowrap;
+    animation-duration: 25s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.marquee-top .marquee-text {
+    animation-name: scroll-right-to-left;
+}
+
+.marquee-bottom .marquee-text {
+    animation-name: scroll-left-to-right;
+}
+
 /* ===== ANIMATIONS ===== */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes popUp { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
