@@ -292,3 +292,16 @@ h3 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
     font-size: 1.8rem;
   }
 }
+
+  #calendar-button-container {
+    display: block;
+    margin: 25px auto;
+    width: 50%;
+    max-width: 110px;
+    position: relative;
+  }
+  #calendar-button-image {
+    width: 100%; 
+    display: block;
+    border-radius: 12px;
+  }
