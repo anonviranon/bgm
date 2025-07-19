@@ -1,108 +1,80 @@
+// This function runs when the entire HTML page has loaded
 document.addEventListener('DOMContentLoaded', function() {
-  const page1 = document.getElementById('page1');
+
+  // --- Page 1 to Page 2 Transition ---
   const staticRose = document.getElementById('static-rose');
-  const video = document.getElementById('blooming-rose-video');
+  const bloomingRoseVideo = document.getElementById('blooming-rose-video');
+  const page1 = document.getElementById('page1');
   const backgroundMusic = document.getElementById('background-music');
 
-  function togglePopup(id) {
-    document.querySelectorAll('.popup').forEach(popup => {
-      if (popup.id !== id && popup.style.display === 'flex') {
-        popup.style.display = 'none';
-      }
-    });
-    const popup = document.getElementById(id);
-    popup.style.display = (popup.style.display === 'flex') ? 'none' : 'flex';
-  }
-
-  window.togglePopup = togglePopup; // Expose to global for HTML inline calls
-
-  function downloadIcsFile() {
-    const icsLink = document.getElementById('ics-cal-link');
-    if (icsLink.classList.contains('link-loading')) return;
-    const link = document.createElement('a');
-    link.href = icsLink.href;
-    link.download = 'event.ics';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  window.downloadIcsFile = downloadIcsFile;
-
-  // Blooming rose animation
   staticRose.addEventListener('click', function() {
-    if (backgroundMusic) {
-      backgroundMusic.play().catch(error => console.error("Audio playback failed:", error));
-    }
-    this.style.display = 'none';
-    video.style.display = 'block';
-    video.play();
+    // Hide the static image and show the video
+    staticRose.style.display = 'none';
+    bloomingRoseVideo.style.display = 'block';
+    bloomingRoseVideo.play();
+    
+    // Play background music
+    backgroundMusic.play();
+
+    // After the rose video finishes, fade out page 1
+    bloomingRoseVideo.onended = function() {
+      page1.style.opacity = '0';
+      // After the fade-out transition, hide page1 completely
+      setTimeout(() => {
+        page1.style.display = 'none';
+      }, 1500); // This time should match the CSS transition duration
+    };
   });
 
-  video.onended = function() {
-    page1.style.opacity = '0';
-    page1.style.pointerEvents = 'none';
 
-    // Simulated attendance count
-    document.getElementById('guest-count').innerText = "75"; // Example value
+  // --- Countdown Timer ---
+  // Set the date for the event
+  const countdownDate = new Date("Sep 27, 2025 12:00:00").getTime();
 
-    // Generate calendar links
-    const startDate = "20250927T060000Z";
-    const endDate = "20250927T140000Z";
-    const title = "Jamuan Kenduri KKTJMPPP";
-    const location = "Berjaya Penang Hotel, George Town, Penang, Malaysia";
-    const description = "Majlis Jamuan Kenduri Kesyukuran Kakitangan Jabatan Mufti Pulau Pinang";
-
-    const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
-    const timestamp = new Date().toISOString().replace(/[-:.]/g, '') + 'Z';
-    const icsContent = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//KKTJMPPP//Jamuan Kenduri//EN',
-      'BEGIN:VEVENT',
-      `UID:kenduri-kktjmppp-20250927@mufti.penang.gov.my`,
-      `DTSTAMP:${timestamp}`,
-      `DTSTART:${startDate}`,
-      `DTEND:${endDate}`,
-      `SUMMARY:${title}`,
-      `DESCRIPTION:${description}`,
-      `LOCATION:${location}`,
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-
-    const icsUri = "data:text/calendar;charset=utf-8," + encodeURIComponent(icsContent);
-
-    const googleEl = document.getElementById("google-cal-link");
-    const icsEl = document.getElementById("ics-cal-link");
-    if (googleEl) {
-      googleEl.href = googleLink;
-      googleEl.classList.remove("link-loading");
-    }
-    if (icsEl) {
-      icsEl.href = icsUri;
-      icsEl.classList.remove("link-loading");
-    }
-  };
-
-  // Countdown timer
-  const countdownDate = new Date("Sep 27, 2025 00:00:00").getTime();
   const timer = setInterval(function() {
     const now = new Date().getTime();
-    const dist = countdownDate - now;
-    const d = Math.floor(dist / (1000 * 60 * 60 * 24));
-    const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((dist % (1000 * 60)) / 1000);
+    const distance = countdownDate - now;
 
-    document.getElementById("days").innerText = d < 10 ? '0' + d : d;
-    document.getElementById("hours").innerText = h < 10 ? '0' + h : h;
-    document.getElementById("minutes").innerText = m < 10 ? '0' + m : m;
-    document.getElementById("seconds").innerText = s < 10 ? '0' + s : s;
+    // Calculations for days, hours, minutes, and seconds
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    if (dist < 0) {
+    // Display the results
+    document.getElementById("days").innerText = String(days).padStart(2, '0');
+    document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+    document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+    document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+
+    // If the countdown is over, display some text
+    if (distance < 0) {
       clearInterval(timer);
-      document.getElementById("countdown-timer").innerHTML = "<h3>The day is here!</h3>";
+      document.getElementById("countdown-timer").innerHTML = "The event has started!";
     }
   }, 1000);
+
 });
+
+
+// --- Popup Toggle Functionality ---
+// This function is called by the onclick attribute in your HTML
+function togglePopup(popupId) {
+  const targetPopup = document.getElementById(popupId);
+  if (!targetPopup) return; // Exit if the popup doesn't exist
+
+  // Check if the target popup is already visible
+  const isVisible = targetPopup.style.display === 'flex';
+
+  // First, hide all popups
+  const allPopups = document.querySelectorAll('.popup');
+  allPopups.forEach(popup => {
+    popup.style.display = 'none';
+  });
+
+  // If the target popup was not visible, show it
+  if (!isVisible) {
+    targetPopup.style.display = 'flex';
+  }
+  // If it was already visible, the code above has already hidden it.
+}
