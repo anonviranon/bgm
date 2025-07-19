@@ -15,33 +15,32 @@
 
     <!-- ===== PAGE 1: The Initial Rose Screen ===== -->
     <div id="page1">
-            <div class="marquee-container marquee-top">
+        <!-- NEW: Top marquee text -->
+        <div class="marquee-container marquee-top">
             <div class="marquee-text">KESATUAN KEBANGSAAN JURUTEKNOLOGI MAKMAL PERUBATAN</div>
         </div>
-        <!-- UPDATED: Changed from an image to an autoplaying video. The user will click this video. -->
+
+        <!-- Existing video content -->
         <video id="static-rose" src="assets/staticrose.mp4" autoplay loop muted playsinline></video>
-        
-        <!-- This video will play after the click -->
         <video id="blooming-rose-video" preload="auto" playsinline muted>
             <source src="assets/bloomrose.mp4" type="video/mp4">
         </video>
-    </div>
 
-            <div class="marquee-container marquee-bottom">
+        <!-- NEW: Bottom marquee text -->
+        <div class="marquee-container marquee-bottom">
             <div class="marquee-text">KESATUAN KEBANGSAAN JURUTEKNOLOGI MAKMAL PERUBATAN</div>
         </div>
-    
+    </div>
+
     <!-- ===== PAGE 2: The Main Invitation Content ===== -->
     <div id="page2">
         <!-- Backgrounds and Overlays -->
         <video id="page2-background-video" autoplay muted loop playsinline>
             <source src="assets/page2bg.mp4" type="video/mp4">
         </video>
-        <!-- The overlay div was removed as per your new code -->
 
         <!-- Scrollable Content -->
         <div class="scroll-container">
-            <!-- Reverted to Imgur link as per your new code -->
             <img src="https://i.imgur.com/IcfKVWq.png" alt="Invitation Header" class="header-image">
             
             <div class="invitation-content">
@@ -65,7 +64,6 @@
                 </div>
             
                 <div id="calendar-button-container" onclick="togglePopup('calendar-popup')">
-                     <!-- Reverted to Imgur link as per your new code -->
                     <img src="https://i.imgur.com/SXj4c93.jpeg" alt="Save the Date" id="calendar-button-image">
                 </div>
 
@@ -101,7 +99,6 @@
         <div id="rsvp-popup" class="popup rsvp-popup-vertical">
             <h3>Répondez s'il vous plaît</h3>
             <a href="#" target="_blank" class="rsvp-link">Early Bird</a>
-            <a href="#" target="_blank" class="rsvp-link">Full Package</a>
             <a href="#" target="_blank" class="rsvp-link">Dinner</a>
             <a href="#" target="_blank" class="rsvp-link">Kursus dan Dinner</a>
         </div>
