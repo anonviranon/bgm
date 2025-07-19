@@ -301,7 +301,7 @@ h3 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
     position: relative;
   }
   #calendar-button-image {
-    width: 100%; 
+    width: 50px; 
     display: block;
     border-radius: 12px;
   }
