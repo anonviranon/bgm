@@ -42,8 +42,8 @@ body, html {
     transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
-    width: 100vw;
-    height: 100vh;
+    width: auto;
+    height: auto;
     object-fit: cover;
 }
 
@@ -59,6 +59,29 @@ body, html {
 
 #page2-background-video {
     z-index: 1;
+}
+
+#effects-overlay-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.5;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 2;
 }
 
 /* ===== SCROLLABLE CONTENT AREA ===== */
@@ -247,6 +270,7 @@ p { margin: 10px 0; }
     opacity: 0.5;
 }
 
+/* ===== NEW: MARQUEE TEXT ON PAGE 1 ===== */
 .marquee-container {
     position: absolute;
     left: 0;
@@ -288,6 +312,17 @@ p { margin: 10px 0; }
 /* ===== ANIMATIONS ===== */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes popUp { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* NEW: Keyframe animations for the scrolling text */
+@keyframes scroll-right-to-left {
+    from { transform: translateX(100vw); }
+    to   { transform: translateX(-100%); } /* -100% of its own width */
+}
+
+@keyframes scroll-left-to-right {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(100vw); }
+}
 
 /* ===== MOBILE ADJUSTMENTS ===== */
 @media (max-width: 768px) {
