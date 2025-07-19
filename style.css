@@ -232,4 +232,56 @@
 .rsvp-popup-vertical .rsvp-link:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+@media (max-width: 480px) {
+  body, html {
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  .popup {
+    gap: 30px;
+    padding: 15px;
+    width: 95%;
+    max-width: none;
+  }
+
+  .header-image {
+    width: 60%;
+    max-width: 150px;
+  }
+
+  #calendar-button-container {
+    width: 70%;
+    max-width: 100px;
+  }
+
+  .icon {
+    padding: 12px;
+  }
+
+  .rsvp-popup-vertical .rsvp-link {
+    font-size: 1.2em;
+    padding: 14px;
+  }
+
+  .popup a i {
+    font-size: 40px;
+  }
+
+  #countdown-timer > div {
+    min-width: 45px;
+    padding: 8px;
+  }
+
+  #countdown-timer span:first-child {
+    font-size: 1.8rem;
+  }
+
+  .scroll-container {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 </style>
