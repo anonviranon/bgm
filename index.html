@@ -4,45 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jemputan ke Majlis Kenduri</title>
-
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <!-- Your Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ===== PAGE 1: The Initial Rose Screen ===== -->
     <div id="page1">
-        <!-- NEW: Top marquee text -->
         <div class="marquee-container marquee-top">
             <div class="marquee-text">KESATUAN KEBANGSAAN JURUTEKNOLOGI MAKMAL PERUBATAN</div>
         </div>
-
-        <!-- Existing video content -->
         <video id="static-rose" src="assets/staticrose.mp4" autoplay loop muted playsinline></video>
         <video id="blooming-rose-video" preload="auto" playsinline muted>
             <source src="assets/bloomrose.mp4" type="video/mp4">
         </video>
-
-        <!-- NEW: Bottom marquee text -->
         <div class="marquee-container marquee-bottom">
             <div class="marquee-text">PERSATUAN JURUTEKNOLOGI MAKMAL PERUBATAN PULAU PINANG</div>
         </div>
     </div>
 
-    <!-- ===== PAGE 2: The Main Invitation Content ===== -->
     <div id="page2">
-        <!-- Backgrounds and Overlays -->
         <video id="page2-background-video" autoplay muted loop playsinline>
             <source src="assets/page2bg.mp4" type="video/mp4">
         </video>
-
-        <!-- Scrollable Content -->
         <div class="scroll-container">
             <img src="https://i.imgur.com/IcfKVWq.png" alt="Invitation Header" class="header-image">
-            
             <div class="invitation-content">
                 <div class="poem">
                     <p><em>Bunga mawar di taman indah,<br>
@@ -58,15 +43,12 @@
                 <h3>Satu Perjalanan Cinta dan Kesatuan</h3>
                 <p>Hotel Berjaya, Pulau Pinang</p>
                 <p>Hari Sabtu, 27 September 2025</p>
-
                 <div id="attendance-counter">
                     ❤️ Tetamu yang hadir <span id="guest-count">0</span> ❤️
                 </div>
-            
                 <div id="calendar-button-container" onclick="togglePopup('calendar-popup')">
                     <img src="https://i.imgur.com/SXj4c93.jpeg" alt="Save the Date" id="calendar-button-image">
                 </div>
-
                 <div id="countdown-timer">
                     <div><span id="days">00</span><span>Days</span></div>
                     <div><span id="hours">00</span><span>Hours</span></div>
@@ -74,17 +56,14 @@
                     <div><span id="seconds">00</span><span>Seconds</span></div>
                 </div>
             </div>
-            <!-- This spacer prevents content from being hidden by the bottom icon bar -->
             <div class="scroll-spacer"></div>
         </div>
         
-        <!-- ===== POPUPS (Now correctly structured as direct children of page2) ===== -->
         <div id="maps-popup" class="popup">
-            <a href="https://www.google.com/maps/dir/?api=1&destination=1-Stop+Midlands+Park,+Jalan+Burma,+10350+George+Town,+Pulau+Pinang" target="_blank"><i class="fas fa-map"></i></a>
+            <a href="https://maps.app.goo.gl/mE1v2t1V2E6ZjbJz7" target="_blank"><i class="fas fa-map"></i></a>
             <a href="https://waze.com/ul?ll=5.4308,100.3095&navigate=yes" target="_blank"><i class="fab fa-waze"></i></a>
             <a href="http://maps.apple.com/?ll=5.4308,100.3095&q=Berjaya+Penang+Hotel" target="_blank"><i class="fab fa-apple"></i></a>
         </div>
-
         <div id="contacts-popup" class="popup">
             <a href="https://wa.me/60134152556" target="_blank" class="contact-link">
                 <i class="fab fa-whatsapp"></i>
@@ -95,7 +74,6 @@
                 <span>Puan Junaidah</span>
             </a>
         </div>
-
         <div id="rsvp-popup" class="popup rsvp-popup-vertical">
             <h3>Tempahan Pakej</h3>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSceuV1sdnbmfXzi9Q86kEFCMZuWejyDuSbVD6E86PfLs9SbCg/viewform?usp=dialog" target="_blank" class="rsvp-link">Embun Pagi RM400</a>
@@ -103,23 +81,27 @@
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSdqZx5jOOUmLaUSpp-eApgojIv7YH87Hn3wBezLnWfiMB1j_A/viewform?usp=dialog" target="_blank" class="rsvp-link">Seri Pengantin RM100</a>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfafRDW1EXOXv1Ei3oU9nUNekt8C2ix3R33L6sts0RSFE3BUQ/viewform?usp=dialog" target="_blank" class="rsvp-link">Ilmu Tersulam Kenduri RM200</a>
         </div>
-
         <div id="calendar-popup" class="popup calendar-popup-style">
             <a id="google-cal-link" href="#" target="_blank" class="contact-link link-loading">
                 <i class="fab fa-google"></i>
                 <span>Google</span>
             </a>
-            <a id="ics-cal-link" href="#" onclick="downloadIcsFile()" class="contact-link link-loading">
+            <a id="ics-cal-link" href="#" download="Majlis_Kenduri.ics" class="contact-link link-loading">
                 <i class="fas fa-calendar-alt"></i>
                 <span>Apple/Other</span>
             </a>
         </div>
+        <div id="tentative-popup" class="popup tentative-popup-container">
+            <span class="close-button" onclick="togglePopup('tentative-popup')">×</span>
+            <img src="assets/thekenduri.png" alt="Aturcara Majlis" class="tentative-image">
+        </div>
 
-        <!-- ===== BOTTOM ICON BAR ===== -->
         <div class="icon-bar">
             <div class="icon-container" onclick="togglePopup('maps-popup')">
                 <i class="fas fa-map-marker-alt icon"></i>
             </div>
+            <div class="icon-container" onclick="togglePopup('tentative-popup')">
+                <i class="fas fa-list-alt icon"></i> </div>
             <div class="icon-container" onclick="togglePopup('rsvp-popup')">
                 <i class="fas fa-calendar-check icon"></i>
             </div>
@@ -129,12 +111,10 @@
         </div>
     </div>
 
-    <!-- Background Music -->
     <audio id="background-music" loop preload="auto">
         <source src="https://raw.githubusercontent.com/anonviranon/lagukawin/main/Izam%20Eye%20%26%20Waheeda%20-%20Kompang%20Dipalu.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- JavaScript (defer makes the page load faster) -->
     <script src="script.js" defer></script>
 </body>
 </html>
