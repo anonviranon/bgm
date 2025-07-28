@@ -285,7 +285,7 @@ p { margin: 10px 0; }
     height: 100%;
     max-width: none;
     border-radius: 0;
-    background-color: rgba(0, 0, 0, 0.85); 
+    background-color: rgba(0, 0, 0, 0.50); 
     
     /* NEW: Start position is off-screen at the bottom */
     transform: translateY(100%); 
