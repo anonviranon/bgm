@@ -392,3 +392,9 @@ p { margin: 10px 0; }
     }
 }
 
+/* Remove blue color and underline from icon links */
+a.icon-container {
+    color: #fff;
+    text-decoration: none;
+}
+
