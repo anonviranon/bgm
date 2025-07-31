@@ -143,8 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "Jamuan Kenduri KKTJMPPP",
             description: "Majlis Jamuan Kenduri Kesyukuran Kakitangan Jabatan Mufti Pulau Pinang",
             location: "Berjaya Penang Hotel, George Town, Penang, Malaysia",
-            startDate: "20250927T060000Z",
-            endDate: "20250927T140000Z",
+            startDate: "20250927T180000Z",
+            endDate: "20250927T233000Z",
         };
         const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.startDate}/${eventDetails.endDate}&details=${encodeURIComponent(eventDetails.description)}&location=${encodeURIComponent(eventDetails.location)}`;
         const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//MyWebApp//EN', 'BEGIN:VEVENT', `UID:kenduri-kktjmppp-${new Date().getTime()}@example.com`, `DTSTAMP:${new Date().toISOString().replace(/[-:.]/g, '')}`, `DTSTART:${eventDetails.startDate}`, `DTEND:${eventDetails.endDate}`, `SUMMARY:${eventDetails.title}`, `DESCRIPTION:${eventDetails.description}`, `LOCATION:${eventDetails.location}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
