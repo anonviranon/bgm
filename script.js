@@ -140,11 +140,11 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function generateCalendarLinks() {
         const eventDetails = {
-            title: "Jamuan Kenduri KKTJMPPP",
-            description: "Majlis Jamuan Kenduri Kesyukuran Kakitangan Jabatan Mufti Pulau Pinang",
+            title: "Malam Gala The Kenduri",
+            description: "Malam Gala The Kenduri, KKJTMP",
             location: "Berjaya Penang Hotel, George Town, Penang, Malaysia",
-            startDate: "20250927T180000Z",
-            endDate: "20250927T233000Z",
+            startDate: "20250927T100000Z",
+            endDate: "20250927T153000Z"
         };
         const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.startDate}/${eventDetails.endDate}&details=${encodeURIComponent(eventDetails.description)}&location=${encodeURIComponent(eventDetails.location)}`;
         const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//MyWebApp//EN', 'BEGIN:VEVENT', `UID:kenduri-kktjmppp-${new Date().getTime()}@example.com`, `DTSTAMP:${new Date().toISOString().replace(/[-:.]/g, '')}`, `DTSTART:${eventDetails.startDate}`, `DTEND:${eventDetails.endDate}`, `SUMMARY:${eventDetails.title}`, `DESCRIPTION:${eventDetails.description}`, `LOCATION:${eventDetails.location}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
